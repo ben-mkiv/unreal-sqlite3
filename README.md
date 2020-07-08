@@ -10,19 +10,17 @@ SQLite3UE4 integrates sqlite3 as a ThirdParty module, which leads to a chain of 
 
 # Works On
 
-Compiled and basic functionality:
+Compiled (and basic functionality):
 
 OS | Tested
 ---|-------
-Windows x64 | ✓
-Android | ✓
+Linux x64 | ✓
 
 UE4 Version | Tested
 ---|-------
-4.22.x | ✓
-4.21.x | ✓
-4.20.x | ✓
-4.19.x | ✓
+4.25.1 | ✓
+
+for 4.19.x - 4.22.x support grab the plugin from ![](https://github.com/Squareys/unreal-sqlite3)
 
 # Installation
 
