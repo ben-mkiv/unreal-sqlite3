@@ -20,7 +20,7 @@ UE4 Version | Tested
 ---|-------
 4.25.1 | ✓
 
-for 4.19.x - 4.22.x support grab the plugin from ![](https://github.com/Squareys/unreal-sqlite3)
+for 4.19.x - 4.22.x support grab the plugin from ![https://github.com/Squareys/unreal-sqlite3](https://github.com/Squareys/unreal-sqlite3)
 
 # Installation
 
