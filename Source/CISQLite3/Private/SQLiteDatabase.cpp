@@ -273,12 +273,12 @@ bool USQLiteDatabase::GetDataIntoObjectBP(const FSQLiteDatabaseReference& DataSo
 
 //--------------------------------------------------------------------------------------------------------------
 
-TMap<FString, UProperty*> USQLiteDatabase::CollectProperties(UObject* SourceObject)
+TMap<FString, FProperty*> USQLiteDatabase::CollectProperties(UObject* SourceObject)
 {
 
 	UClass* SourceObjectClass = SourceObject->GetClass();
-	TMap<FString, UProperty*> Props;
-	for (TFieldIterator<UProperty> PropIt(SourceObjectClass, EFieldIteratorFlags::SuperClassFlags::IncludeSuper);
+	TMap<FString, FProperty*> Props;
+	for (TFieldIterator<FProperty> PropIt(SourceObjectClass, EFieldIteratorFlags::SuperClassFlags::IncludeSuper);
 		PropIt; ++PropIt)
 	{
 		Props.Add(*PropIt->GetNameCPP(), *PropIt);
@@ -797,37 +797,37 @@ void USQLiteDatabase::AssignResultsToObjectProperties(const SQLiteResultValue& R
 	{
 		if (propertyMap.Contains(field.Name))
 		{
-			UProperty* targetProperty = propertyMap[field.Name];
+            FProperty* targetProperty = propertyMap[field.Name];
 
 			if (field.Type == SQLiteResultValueTypes::Integer)
 			{
-				UInt64Property* int64prop = NULL;
-				UIntProperty* int32prop = NULL;
-				UInt16Property* int16prop = NULL;
-				UInt8Property* int8prop = NULL;
-				UBoolProperty* boolProp = NULL;
+				FInt64Property* int64prop = NULL;
+				FIntProperty* int32prop = NULL;
+				FInt16Property* int16prop = NULL;
+				FInt8Property* int8prop = NULL;
+				FBoolProperty* boolProp = NULL;
 
-				if ((int64prop = Cast<UInt64Property>(targetProperty)) != NULL)
+				if ((int64prop = Cast<FInt64Property>(targetProperty)) != NULL)
 				{
 					int64prop->SetPropertyValue_InContainer(ObjectToPopulate, field.IntValue);
 					LOGSQLITE(Verbose, *FString::Printf(TEXT("Property '%s' was set to '%d'"), *field.Name, field.IntValue));
 				}
-				else if ((int32prop = Cast<UIntProperty>(targetProperty)) != NULL)
+				else if ((int32prop = Cast<FIntProperty>(targetProperty)) != NULL)
 				{
 					int32prop->SetPropertyValue_InContainer(ObjectToPopulate, (int32)field.IntValue);
 					LOGSQLITE(Verbose, *FString::Printf(TEXT("Property '%s' was set to '%d'"), *field.Name, field.IntValue));
 				}
-				else if ((int16prop = Cast<UInt16Property>(targetProperty)) != NULL)
+				else if ((int16prop = Cast<FInt16Property>(targetProperty)) != NULL)
 				{
 					int16prop->SetPropertyValue_InContainer(ObjectToPopulate, (int16)field.IntValue);
 					LOGSQLITE(Verbose, *FString::Printf(TEXT("Property '%s' was set to '%d'"), *field.Name, field.IntValue));
 				}
-				else if ((int8prop = Cast<UInt8Property>(targetProperty)) != NULL)
+				else if ((int8prop = Cast<FInt8Property>(targetProperty)) != NULL)
 				{
 					int8prop->SetPropertyValue_InContainer(ObjectToPopulate, (int8)field.IntValue);
 					LOGSQLITE(Verbose, *FString::Printf(TEXT("Property '%s' was set to '%d'"), *field.Name, field.IntValue));
 				}
-				else if ((boolProp = Cast<UBoolProperty>(targetProperty)) != NULL)
+				else if ((boolProp = Cast<FBoolProperty>(targetProperty)) != NULL)
 				{
 					boolProp->SetPropertyValue_InContainer(ObjectToPopulate, field.IntValue > 0);
 					LOGSQLITE(Verbose, *FString::Printf(TEXT("Property '%s' was set to '%d'"), *field.Name, field.IntValue));
@@ -836,14 +836,14 @@ void USQLiteDatabase::AssignResultsToObjectProperties(const SQLiteResultValue& R
 
 			else if (field.Type == SQLiteResultValueTypes::Float)
 			{
-				UDoubleProperty* doubleProp = NULL;
-				UFloatProperty* floatProp = NULL;
-				if ((doubleProp = Cast<UDoubleProperty>(targetProperty)) != NULL)
+				FDoubleProperty* doubleProp = NULL;
+				FFloatProperty* floatProp = NULL;
+				if ((doubleProp = Cast<FDoubleProperty>(targetProperty)) != NULL)
 				{
 					doubleProp->SetPropertyValue_InContainer(ObjectToPopulate, field.DoubleValue);
 					LOGSQLITE(Verbose, *FString::Printf(TEXT("Property '%s' was set to '%f'"), *field.Name, field.DoubleValue));
 				}
-				else if ((floatProp = Cast<UFloatProperty>(targetProperty)) != NULL)
+				else if ((floatProp = Cast<FFloatProperty>(targetProperty)) != NULL)
 				{
 					floatProp->SetPropertyValue_InContainer(ObjectToPopulate, (float)field.DoubleValue);
 					LOGSQLITE(Verbose, *FString::Printf(TEXT("Property '%s' was set to '%f'"), *field.Name, field.DoubleValue));
@@ -852,8 +852,8 @@ void USQLiteDatabase::AssignResultsToObjectProperties(const SQLiteResultValue& R
 
 			else if (field.Type == SQLiteResultValueTypes::Text)
 			{
-				UStrProperty* strProp = NULL;
-				if ((strProp = Cast<UStrProperty>(targetProperty)) != NULL)
+				FStrProperty* strProp = NULL;
+				if ((strProp = Cast<FStrProperty>(targetProperty)) != NULL)
 				{
 					strProp->SetPropertyValue_InContainer(ObjectToPopulate, field.StringValue);
 					LOGSQLITE(Verbose, *FString::Printf(TEXT("Property '%s' was set to '%s'"), *field.Name, *field.StringValue.Mid(0, 64)));
