@@ -1,3 +1,4 @@
+#include "SQLiteDatabase.h"
 #include "CISQLite3PrivatePCH.h"
 #include "SQLiteDatabase.h"
 
